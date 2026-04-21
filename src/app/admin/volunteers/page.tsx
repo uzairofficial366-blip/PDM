@@ -10,9 +10,10 @@ export default function AdminVolunteers() {
   const [filter, setFilter] = useState("ALL");
 
   useEffect(() => {
-    fetch("/api/admin/volunteers").then(res => {
-      if (res.status === 401) { window.location.href = "/admin"; return res; }
-      return res.json().then(setVolunteers);
+    fetch("/api/admin/volunteers").then(async (res) => {
+      if (res.status === 401) { window.location.href = "/admin"; return; }
+      const data = await res.json();
+      setVolunteers(data);
     }).finally(() => setLoading(false));
   }, []);
 
